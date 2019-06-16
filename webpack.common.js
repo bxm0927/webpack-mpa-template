@@ -3,72 +3,59 @@
  * @Author: xiaoming.bai
  * @Date: 2019-05-28 18:03:12
  * @Last Modified by: xiaoming.bai
- * @Last Modified time: 2019-06-16 18:23:19
+ * @Last Modified time: 2019-06-16 21:43:56
  */
 
+const _ = require('lodash')
 const path = require('path')
-const glob = require('glob')
 const webpack = require('webpack')
+const shelljs = require('shelljs')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const devMode = process.env.NODE_ENV !== 'production'
 
-const plugins = [
+let plugins = [
   new VueLoaderPlugin(),
   new CleanWebpackPlugin(),
   new webpack.HashedModuleIdsPlugin(),
-  // new HtmlWebpackPlugin({
-  //   template: path.resolve(__dirname, './index.html'),
-  //   favicon: './favicon.ico',
-  // }),
+  new HtmlWebpackPlugin({
+    favicon: './favicon.ico',
+  }),
   new MiniCssExtractPlugin({
-    filename: devMode ? '[name].css' : '[name].[hash].css',
-    chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+    filename: devMode ? '[name].css' : '[name].[contenthash].css',
+    chunkFilename: devMode ? '[id].css' : '[id].[contenthash].css',
   }),
 ]
 
+/**
+ * 通过约定的入口文件命名构建 webpack entry：`模块名.页面名`
+ * 过程解析：
+ * - filePath: `'path/to/src/index/index.page.js'`
+ * - filePathArr: `['path', 'to', 'src', 'index', 'index.page.js']`
+ * - fileName: `'index.page.js'`
+ * - pageName: `'index'`
+ * - entry: `{ index: './src/index/index.page.js' }`
+ */
 let entry = {}
+shelljs.ls(path.join(__dirname, '/src/**/*.page.js')).forEach(filePath => {
+  const filePathArr = filePath.split('/')
+  const fileName = _.last(filePathArr)
+  const pageName = fileName.replace(/\.page.js$/, '')
+  const srcPos = _.indexOf(filePathArr, 'src')
 
-function getEntry(globPath, pathDir) {
-  let files = glob.sync(globPath)
-  console.log('files: ', files)
-  let entries = {},
-    entry,
-    dirname,
-    basename,
-    pathname,
-    extname
+  entry[pageName] = `./${filePathArr.slice(srcPos).join('/')}`
 
-  for (let i = 0; i < files.length; i++) {
-    entry = files[i]
-    dirname = path.dirname(entry)
-    extname = path.extname(entry)
-    basename = path.basename(entry, extname)
-    pathname = path.join(dirname, basename)
-    pathname = pathDir ? pathname.replace(new RegExp('^' + pathDir), '') : pathname
-    entries[pathname] = ['./' + entry]
-  }
-  console.log('entries: ', entries)
-  return entries
-}
-
-let pages = Object.keys(getEntry('./src/*/*.html', 'src'))
-console.log('pages: ', pages)
-
-pages.forEach(function(pathname) {
-  const fileName = pathname.split('/')[1]
-  const conf = {
-    template: 'src' + pathname + '.html',
-  }
-  plugins.push(new HtmlWebpackPlugin(conf))
-  entry[fileName] = `./src/${pathname}.js`
+  const html = new HtmlWebpackPlugin({
+    filename: `${pageName}.html`,
+    template: path.resolve(__dirname, `./src/${pageName}/index.html`),
+  })
+  plugins.push(html)
 })
 
 module.exports = {
   entry,
-  plugins,
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: devMode ? '[name].js' : '[name].[contenthash].js',
@@ -145,4 +132,5 @@ module.exports = {
       },
     ],
   },
+  plugins,
 }
