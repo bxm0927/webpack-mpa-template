@@ -1,0 +1,33 @@
+{
+  "name": "webpack-mpa-template",
+  "version": "1.0.0",
+  "description": "My praiseworthy wabpack-mpa project",
+  "keywords": [
+    "webpack",
+    "babel",
+    "MPA"
+  ],
+  "main": "index.js",
+  "author": "xiaoming.bai",
+  "license": "ISC",
+  "homepage": "https://github.com/bxm0927/webpack-mpa-template#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bxm0927/webpack-mpa-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bxm0927/webpack-mpa-template/issues"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "babel-loader": "^8.0.6",
+    "webpack": "^4.34.0"
+  }
+}
