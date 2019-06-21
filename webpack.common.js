@@ -3,7 +3,7 @@
  * @Author: xiaoming.bai
  * @Date: 2019-05-28 18:03:12
  * @Last Modified by: xiaoming.bai
- * @Last Modified time: 2019-06-18 16:12:16
+ * @Last Modified time: 2019-06-21 15:03:09
  */
 
 const _ = require('lodash')
@@ -104,7 +104,10 @@ const devMode = process.env.NODE_ENV !== 'production'
 // }
 
 module.exports = {
-  entry,
+  entry: {
+    foo: path.resolve(__dirname, 'src/pages/foo'),
+    bar: path.resolve(__dirname, 'src/pages/bar'),
+  },
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: devMode ? '[name].js' : '[name].[contenthash].js',
@@ -182,7 +185,18 @@ module.exports = {
     ],
   },
   plugins: [
-    ...htmlWebpackPlugin,
+    new HtmlWebpackPlugin({
+      chunks: ['runtime', 'foo'],
+      template: 'src/pages/foo/index.html',
+      filename: 'foo.html',
+      title: 'Foo Page',
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['runtime', 'bar'],
+      template: 'src/pages/bar/index.html',
+      filename: 'bar.html',
+      title: 'Bar Page',
+    }),
     new VueLoaderPlugin(),
     new CleanWebpackPlugin(),
     new webpack.HashedModuleIdsPlugin(),

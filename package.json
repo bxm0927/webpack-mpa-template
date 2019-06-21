@@ -2,20 +2,12 @@
   "name": "webpack-mpa-template",
   "version": "1.0.0",
   "description": "My praiseworthy wabpack-mpa project",
-  "keywords": [
-    "webpack4",
-    "babel7"
-  ],
   "main": "index.js",
-  "author": "xiaoming.bai",
+  "author": "bxm0927 <80583600@qq.com>",
   "license": "ISC",
-  "homepage": "https://github.com/bxm0927/webpack-mpa-template#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bxm0927/webpack-mpa-template.git"
-  },
-  "bugs": {
-    "url": "https://github.com/bxm0927/webpack-mpa-template/issues"
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack.dev.js",
@@ -60,5 +52,10 @@
     "webpack-cli": "^3.3.2",
     "webpack-dev-server": "^3.4.1",
     "webpack-merge": "^4.2.1"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }
