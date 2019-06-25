@@ -1,3 +1,3 @@
 // import './assets/index.scss'
 
-console.log(11)
+console.log('foo page')

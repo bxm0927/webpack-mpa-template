@@ -3,7 +3,7 @@
  * @Author: xiaoming.bai
  * @Date: 2019-05-28 18:03:12
  * @Last Modified by: xiaoming.bai
- * @Last Modified time: 2019-06-21 15:03:09
+ * @Last Modified time: 2019-06-25 14:13:38
  */
 
 const _ = require('lodash')
@@ -12,6 +12,7 @@ const path = require('path')
 const webpack = require('webpack')
 const shelljs = require('shelljs')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
@@ -105,35 +106,36 @@ const devMode = process.env.NODE_ENV !== 'production'
 
 module.exports = {
   entry: {
-    foo: path.resolve(__dirname, 'src/pages/foo'),
-    bar: path.resolve(__dirname, 'src/pages/bar'),
+    index: path.resolve(__dirname, '../src/pages/index'),
+    foo: path.resolve(__dirname, '../src/pages/foo'),
+    bar: path.resolve(__dirname, '../src/pages/bar'),
+    barBaz: path.resolve(__dirname, '../src/pages/bar/baz'),
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: devMode ? '[name].js' : '[name].[contenthash].js',
-  },
-  optimization: {
-    usedExports: true, // tree shaking
-    runtimeChunk: 'single',
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-        },
-      },
-    },
+    path: path.resolve(__dirname, '../dist'),
+    filename: devMode ? 'js/[name].js' : 'js/[name].[contenthash].js',
   },
   resolve: {
     extensions: ['.js', '.json', '.vue'],
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '@': path.resolve(__dirname, '../src'),
       vue$: 'vue/dist/vue.esm.js',
     },
   },
   module: {
     rules: [
+      // vue
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+      },
+      // js
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+      },
+      // style
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
@@ -148,64 +150,98 @@ module.exports = {
           'sass-loader',
         ],
       },
+      // images
       {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)$/,
+        test: /\.(png|jpe?g|gif|webp)(\?.*)?$/,
         use: [
           {
             loader: 'url-loader',
             options: {
               limit: 8 * 1024, // 8K
-              outputPath: 'assets/images/',
-              name: devMode ? '[name].[ext]' : '[name].[hash].[ext]',
+              outputPath: 'img/',
+              name: devMode ? '[name].[ext]' : '[name].[hash:8].[ext]',
             },
           },
           'image-webpack-loader',
         ],
       },
+      // svg
       {
-        test: /\.(woff|woff2|eot|ttf|svg)$/,
+        test: /\.(svg)(\?.*)?$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            outputPath: 'img/',
+            name: devMode ? '[name].[ext]' : '[name].[hash:8].[ext]',
+          },
+        },
+      },
+      // fonts
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
         use: {
           loader: 'url-loader',
           options: {
             limit: 8 * 1024, // 8K
-            outputPath: 'assets/fonts/',
-            name: devMode ? '[name].[ext]' : '[name].[hash].[ext]',
+            outputPath: 'fonts/',
+            name: devMode ? '[name].[ext]' : '[name].[hash:8].[ext]',
           },
         },
       },
+      // media
       {
-        test: /\.vue$/,
-        loader: 'vue-loader',
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 8 * 1024, // 8K
+            outputPath: 'media/',
+            name: devMode ? '[name].[ext]' : '[name].[hash:8].[ext]',
+          },
+        },
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      chunks: ['runtime', 'foo'],
-      template: 'src/pages/foo/index.html',
-      filename: 'foo.html',
-      title: 'Foo Page',
+      chunks: ['index'],
+      template: 'index.html',
+      filename: 'index.html',
+      title: 'index Page',
     }),
     new HtmlWebpackPlugin({
-      chunks: ['runtime', 'bar'],
-      template: 'src/pages/bar/index.html',
-      filename: 'bar.html',
-      title: 'Bar Page',
+      chunks: ['foo'],
+      template: 'index.html',
+      filename: 'foo.html',
+      title: 'foo Page',
     }),
+    new HtmlWebpackPlugin({
+      chunks: ['bar'],
+      template: 'index.html',
+      filename: 'bar.html',
+      title: 'bar Page',
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['barBaz'],
+      template: 'index.html',
+      filename: 'bar/baz.html',
+      title: 'barBaz Page',
+    }),
+
     new VueLoaderPlugin(),
     new CleanWebpackPlugin(),
     new webpack.HashedModuleIdsPlugin(),
-    new HtmlWebpackPlugin({
-      favicon: './favicon.ico',
-    }),
+    // Copy custom static assets
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../static'),
+        to: path.resolve(__dirname, '../dist'),
+      },
+    ]),
+    // Extract css
     new MiniCssExtractPlugin({
-      filename: devMode ? '[name].css' : '[name].[contenthash].css',
-      chunkFilename: devMode ? '[id].css' : '[id].[contenthash].css',
+      filename: devMode ? 'css/[name].css' : 'css/[name].[contenthash].css',
+      chunkFilename: devMode ? 'css/[id].css' : 'css/[id].[contenthash].css',
     }),
   ],
 }
