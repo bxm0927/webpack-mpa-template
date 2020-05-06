@@ -1,14 +1,18 @@
 # webpack-mpa-template
 
-这是一个使用 webpack 配置多页应用(MPA)的简易 demo。
+这是一个使用 webpack 配置的多页应用(MPA)脚手架，页面使用 Vue 开发，支持开发热更新，你可以把每一个页面看作是一个局部的 SPA。
 
-多页面依据 `/src` 中的目录**动态生成**。如本例中 `/src` 文件夹下有 `/index`、`/page1`、`/page2` 几个页面，打包后将自动生成 `index.html`、`page1.html`、`page2.html`，几个文件都具有自己独立的依赖。
+无 SEO 支持，如果在前后端分离项目中有 SEO 的需求，请考虑如下组合：`Vue + Nuxt.js` or `React + Next.js`
 
-## Framework
+公共资源放到 `/src/assets/` 中进行管理，私有资源就近维护。
+
+## 框架和技术栈
 
 主要框架和库的版本：
 
 Node.js 10.x | webpack 4.x | babel 7.x | babel-loader 8.x
+
+## 项目目录结构
 
 ## Usage
 

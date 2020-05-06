@@ -2,3 +2,14 @@
   "presets": ["@babel/preset-env"],
   "plugins": ["@babel/plugin-transform-runtime"]
 }
+
+// {
+//   "presets": [
+//     ["@babel/preset-env", { "useBuiltIns": "usage", "corejs": "3" }],
+//     "@babel/preset-react"
+//   ],
+//   "plugins": [
+//     "@babel/plugin-transform-runtime",
+//     ["import", { "libraryName": "antd-mobile", "style": "css" }]
+//   ]
+// }

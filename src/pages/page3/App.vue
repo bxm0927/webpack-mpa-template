@@ -1,6 +1,6 @@
 <template>
   <div class="page-home">
-    <h1>Page Index</h1>
+    <h1>Page3</h1>
 
     <ul>
       <li>
@@ -19,10 +19,6 @@
         <a href="/page3/page3-child.html">page3-child</a>
       </li>
     </ul>
-
-    <div class="images-box">
-      <img src="./assets/rabbit.png" alt="rabbit" />
-    </div>
   </div>
 </template>
 
@@ -32,15 +28,6 @@ export default {}
 
 <style lang="scss" scoped>
 .page-home {
-  color: red;
-  h1 {
-    user-select: none;
-  }
-}
-
-.images-box {
-  img {
-    width: 100px;
-  }
+  color: blue;
 }
 </style>
