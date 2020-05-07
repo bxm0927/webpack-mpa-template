@@ -6,30 +6,27 @@
 
 所以如果你只需要 SPA，可以这样修改该脚手架：
 
-- 。。。
-
-## 我只使用 jQuery + Bootstrap
-
-e………(⊙o⊙)………e
-
-所以如果你只需要 jQuery + Bootstrap，而不需要 Vue/React，可以这样修改该脚手架：
-
--
+- ...
 
 ## 如何在 Vue 文件中使用图片资源
 
-在 template 中：
+在 `template` 中：
 
 ```html
-<img :src="require('./assets/rabbit.png').default" alt="rabbit" />
+<!-- 推荐 -->
+<img src="@/assets/images/index/cup.png" alt="cup" />
+
+<!-- 不推荐 -->
+<img src="../../assets/images/index/cup.png" alt="cup" />
+<img :src="require('@/assets/images/index/cup.png')" alt="cup" />
 ```
 
-在 stule 中：
+在 `style` 中：
 
 ```css
-.avatar {
+.inner {
   width: 128px;
   height: 128px;
-  background: url('./assets/rabbit.png') no-repeat;
+  background: url('~@/assets/images/common/rabbit.png') no-repeat;
 }
 ```

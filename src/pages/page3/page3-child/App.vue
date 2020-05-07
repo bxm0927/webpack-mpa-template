@@ -19,10 +19,6 @@
         <a href="/page3/page3-child.html">page3-child</a>
       </li>
     </ul>
-
-    <div class="image-box">
-      <div class="inner"></div>
-    </div>
   </div>
 </template>
 
@@ -33,19 +29,5 @@ export default {}
 <style lang="scss" scoped>
 .page-home {
   color: deepskyblue;
-}
-
-.image-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 400px;
-  height: 400px;
-  background-color: pink;
-  .inner {
-    width: 128px;
-    height: 128px;
-    /* background: url('./assets/rabbit.png') no-repeat; */
-  }
 }
 </style>

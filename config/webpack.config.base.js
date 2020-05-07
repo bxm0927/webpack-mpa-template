@@ -3,7 +3,7 @@
  * @Author: xiaoming.bai
  * @Date: 2019-05-28 18:03:12
  * @Last Modified by: xiaoming.bai
- * @Last Modified time: 2020-05-07 16:43:38
+ * @Last Modified time: 2020-05-07 17:26:06
  */
 
 const _ = require('lodash')
@@ -51,7 +51,6 @@ const getEntries = () => {
 
   return { entry, htmlWebpackPlugin }
 }
-
 const { entry, htmlWebpackPlugin } = getEntries()
 
 module.exports = {
@@ -96,6 +95,7 @@ module.exports = {
             loader: MiniCssExtractPlugin.loader,
             options: {
               hmr: devMode,
+              publicPath: '../', // Solve static resource path errors
             },
           },
           'css-loader',
@@ -120,14 +120,13 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              // esModule: false, // 不加的话会有这种情况 img属性src="[object Module]"
-              limit: 100, // 8K 8 * 1024
-              // outputPath: 'img/',
-              // name: '[name].[hash:8].[ext]',
+              limit: 8 * 1024, // 8K
+              outputPath: 'img/',
+              name: '[name].[hash:8].[ext]',
             },
           },
         ],
-        // include: [srcPath],
+        include: [srcPath],
       },
       // svg
       {

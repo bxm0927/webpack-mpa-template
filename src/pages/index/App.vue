@@ -21,13 +21,12 @@
     </ul>
 
     <div class="images-box1">
-      <img src="../../assets/images/index/cup.png" alt="cup" />
       <img src="@/assets/images/index/cup.png" alt="cup" />
+      <img src="../../assets/images/index/cup.png" alt="cup" />
       <img :src="require('@/assets/images/index/cup.png')" alt="cup" />
     </div>
 
     <div class="image-box2">
-      <!-- background-image -->
       <div class="inner"></div>
     </div>
   </div>
@@ -40,14 +39,12 @@ export default {}
 <style lang="scss" scoped>
 .page-home {
   color: red;
-  h1 {
-    user-select: none;
-  }
+  user-select: none; // test autoprefixer
 }
 
 .images-box1 {
   img {
-    width: 100px;
+    width: 50px;
   }
 }
 
@@ -61,7 +58,7 @@ export default {}
   .inner {
     width: 128px;
     height: 128px;
-    background: url('~@/assets/images/index/cup.png') no-repeat;
+    background: url('~@/assets/images/common/rabbit.png') no-repeat;
   }
 }
 </style>
