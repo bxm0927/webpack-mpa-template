@@ -3,7 +3,7 @@
  * @Author: xiaoming.bai
  * @Date: 2019-05-28 18:03:12
  * @Last Modified by: xiaoming.bai
- * @Last Modified time: 2020-05-07 01:49:57
+ * @Last Modified time: 2020-05-07 16:43:38
  */
 
 const _ = require('lodash')
@@ -25,20 +25,19 @@ const staticPath = path.resolve(__dirname, '../static')
 const getEntries = () => {
   let entry = {}
   let htmlWebpackPlugin = []
-  const entries = glob.sync('./src/pages/**/index.js') // Pay attention to rules
-  console.log('entries: ', entries)
+  const entries = glob.sync('./src/pages/**/main.js') // Pay attention to rules
 
-  entries.forEach((path) => {
-    const pageName = path.slice('./src/pages/'.length, -'/index.js'.length)
+  entries.forEach(path => {
+    const pageName = path.slice('./src/pages/'.length, -'/main.js'.length)
     entry[pageName] = path
 
     // Something like this:
     // entry:  {
-    //   index: './src/pages/index/index.js',
-    //   page1: './src/pages/page1/index.js',
-    //   page2: './src/pages/page2/index.js',
-    //   page3: './src/pages/page3/index.js',
-    //   'page3/page3-child': './src/pages/page3/page3-child/index.js'
+    //   index: './src/pages/index/main.js',
+    //   page1: './src/pages/page1/main.js',
+    //   page2: './src/pages/page2/main.js',
+    //   page3: './src/pages/page3/main.js',
+    //   'page3/page3-child': './src/pages/page3/page3-child/main.js'
     // }
 
     const html = new HtmlWebpackPlugin({
@@ -85,7 +84,7 @@ module.exports = {
       // js
       {
         test: /\.js$/,
-        test: /\.jsx?$/, // If use React
+        // test: /\.jsx?$/, // If use React
         loader: 'babel-loader',
         exclude: /node_modules/,
       },
@@ -121,14 +120,14 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              limit: 8 * 1024, // 8K
-              outputPath: 'img/',
-              name: devMode ? '[name].[ext]' : '[name].[hash:8].[ext]',
+              // esModule: false, // 不加的话会有这种情况 img属性src="[object Module]"
+              limit: 100, // 8K 8 * 1024
+              // outputPath: 'img/',
+              // name: '[name].[hash:8].[ext]',
             },
           },
-          'image-webpack-loader',
         ],
-        include: [srcPath],
+        // include: [srcPath],
       },
       // svg
       {
@@ -137,7 +136,7 @@ module.exports = {
           loader: 'file-loader',
           options: {
             outputPath: 'img/',
-            name: devMode ? '[name].[ext]' : '[name].[hash:8].[ext]',
+            name: '[name].[hash:8].[ext]',
           },
         },
         include: [srcPath],
@@ -150,7 +149,7 @@ module.exports = {
           options: {
             limit: 8 * 1024, // 8K
             outputPath: 'fonts/',
-            name: devMode ? '[name].[ext]' : '[name].[hash:8].[ext]',
+            name: '[name].[hash:8].[ext]',
           },
         },
       },
@@ -162,7 +161,7 @@ module.exports = {
           options: {
             limit: 8 * 1024, // 8K
             outputPath: 'media/',
-            name: devMode ? '[name].[ext]' : '[name].[hash:8].[ext]',
+            name: '[name].[hash:8].[ext]',
           },
         },
         include: [srcPath],

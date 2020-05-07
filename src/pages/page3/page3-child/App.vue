@@ -45,7 +45,7 @@ export default {}
   .inner {
     width: 128px;
     height: 128px;
-    background: url('./assets/rabbit.png') no-repeat;
+    /* background: url('./assets/rabbit.png') no-repeat; */
   }
 }
 </style>

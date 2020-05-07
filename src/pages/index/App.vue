@@ -20,8 +20,15 @@
       </li>
     </ul>
 
-    <div class="images-box">
-      <img src="./assets/rabbit.png" alt="rabbit" />
+    <div class="images-box1">
+      <img src="../../assets/images/index/cup.png" alt="cup" />
+      <img src="@/assets/images/index/cup.png" alt="cup" />
+      <img :src="require('@/assets/images/index/cup.png')" alt="cup" />
+    </div>
+
+    <div class="image-box2">
+      <!-- background-image -->
+      <div class="inner"></div>
     </div>
   </div>
 </template>
@@ -38,9 +45,23 @@ export default {}
   }
 }
 
-.images-box {
+.images-box1 {
   img {
     width: 100px;
+  }
+}
+
+.image-box2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  height: 400px;
+  background-color: pink;
+  .inner {
+    width: 128px;
+    height: 128px;
+    background: url('~@/assets/images/index/cup.png') no-repeat;
   }
 }
 </style>
