@@ -40,6 +40,7 @@ export default {}
 .page-home {
   color: red;
   user-select: none; // test autoprefixer
+  background-color: $bg-color;
 }
 
 .images-box1 {

@@ -1,5 +1,7 @@
 PostCSS -> postcss.config.js
 
+UI framework
+
 ESLint
 
 vue-router
@@ -8,10 +10,8 @@ vuex
 
 axios
 
-UI framework
-
 server
-  -> KOA
-  -> MongoDB
-  -> Redis
-  -> Winston
+-> KOA
+-> MongoDB
+-> Redis
+-> Winston

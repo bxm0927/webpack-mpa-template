@@ -3,7 +3,7 @@
  * @Author: xiaoming.bai
  * @Date: 2019-05-28 18:03:12
  * @Last Modified by: xiaoming.bai
- * @Last Modified time: 2020-05-07 17:26:06
+ * @Last Modified time: 2020-05-07 17:47:48
  */
 
 const _ = require('lodash')
@@ -101,16 +101,16 @@ module.exports = {
           'css-loader',
           'postcss-loader',
           'sass-loader',
-          // // SASS resources (e.g. variables, mixins etc.) loader for Webpack.
-          // {
-          //   loader: 'sass-resources-loader',
-          //   options: {
-          //     resources: [
-          //       path.resolve(srcPath, 'assets/stylesheets/vars.scss'),
-          //       path.resolve(srcPath, 'assets/stylesheets/resources.scss'),
-          //     ],
-          //   },
-          // },
+          // SASS resources (e.g. variables, mixins etc.) loader for Webpack.
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              resources: [
+                path.resolve(srcPath, 'assets/stylesheets/constants.scss'),
+                path.resolve(srcPath, 'assets/stylesheets/resources.scss'),
+              ],
+            },
+          },
         ],
       },
       // images
