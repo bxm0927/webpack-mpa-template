@@ -13,12 +13,19 @@
 在 `template` 中：
 
 ```html
-<!-- 推荐 -->
-<img src="@/assets/images/index/cup.png" alt="cup" />
+<img :src="cup" alt="cup" />
 
-<!-- 不推荐 -->
-<img src="../../assets/images/index/cup.png" alt="cup" />
-<img :src="require('@/assets/images/index/cup.png')" alt="cup" />
+<script>
+  import cup from '@/assets/images/index/cup.png'
+
+  export default {
+    data() {
+      return {
+        cup,
+      }
+    },
+  }
+</script>
 ```
 
 在 `style` 中：
@@ -30,3 +37,5 @@
   background: url('~@/assets/images/common/rabbit.png') no-repeat;
 }
 ```
+
+> TODO 这里需要优化，支持直接在 `template` 中写 `@/assets/images/index/cup.png`

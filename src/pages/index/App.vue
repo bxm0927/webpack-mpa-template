@@ -21,9 +21,10 @@
     </ul>
 
     <div class="images-box1">
-      <img src="@/assets/images/index/cup.png" alt="cup" />
-      <img src="../../assets/images/index/cup.png" alt="cup" />
-      <img :src="require('@/assets/images/index/cup.png')" alt="cup" />
+      <img :src="cup" alt="cup" />
+      <!-- <img src="@/assets/images/index/cup.png" alt="cup" /> -->
+      <!-- <img src="../../assets/images/index/cup.png" alt="cup" /> -->
+      <!-- <img :src="require('@/assets/images/index/cup.png')" alt="cup" /> -->
     </div>
 
     <div class="image-box2">
@@ -33,7 +34,15 @@
 </template>
 
 <script>
-export default {}
+import cup from '@/assets/images/index/cup.png'
+
+export default {
+  data() {
+    return {
+      cup,
+    }
+  },
+}
 </script>
 
 <style lang="scss" scoped>

@@ -3,7 +3,7 @@
  * @Author: xiaoming.bai
  * @Date: 2019-05-28 18:03:12
  * @Last Modified by: xiaoming.bai
- * @Last Modified time: 2020-05-17 03:08:51
+ * @Last Modified time: 2020-05-17 03:12:11
  */
 
 const _ = require('lodash')
@@ -123,7 +123,7 @@ module.exports = {
               limit: 8 * 1024, // 8K
               outputPath: 'img/',
               name: '[name].[hash:8].[ext]',
-              esModule: false, // fix <img src="[object Module]" />
+              // esModule: false, // fix <img src="[object Module]" />
             },
           },
         ],
