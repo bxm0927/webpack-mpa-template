@@ -49,6 +49,8 @@ export default {
 .page-home {
   color: red;
   user-select: none; // test autoprefixer
+  background: url('~@/assets/images/common/bg.jpg') no-repeat;
+  background-size: cover;
   background-color: $bg-color;
 }
 
