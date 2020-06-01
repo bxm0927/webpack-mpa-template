@@ -3,7 +3,7 @@
  * @Author: xiaoming.bai
  * @Date: 2019-05-28 18:03:12
  * @Last Modified by: xiaoming.bai
- * @Last Modified time: 2020-05-17 03:12:11
+ * @Last Modified time: 2020-06-01 20:47:36
  */
 
 const _ = require('lodash')
@@ -58,6 +58,7 @@ module.exports = {
   output: {
     path: distPath,
     filename: devMode ? 'js/[name].js' : 'js/[name].[contenthash:8].js',
+    publicPath: devMode ? '/' : '/webpack-mpa-template/',
   },
   resolve: {
     extensions: ['.js', '.json', '.jsx', '.vue'],
